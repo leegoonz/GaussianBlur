@@ -3,7 +3,7 @@
 [ExecuteInEditMode]
 public class FilterTest : MonoBehaviour
 {
-    enum DownSampleMode { Off, Half, Quarter }
+    enum DownSampleMode { Off, Half, Quarter , Eighter }
 
     [SerializeField, HideInInspector]
     Shader _shader;
@@ -11,7 +11,7 @@ public class FilterTest : MonoBehaviour
     [SerializeField]
     DownSampleMode _downSampleMode = DownSampleMode.Quarter;
 
-    [SerializeField, Range(0, 8)]
+    [SerializeField, Range(0, 32)]
     int _iteration = 4;
 
     Material _material;
@@ -37,6 +37,13 @@ public class FilterTest : MonoBehaviour
             rt1 = RenderTexture.GetTemporary(source.width / 4, source.height / 4);
             rt2 = RenderTexture.GetTemporary(source.width / 4, source.height / 4);
             Graphics.Blit(source, rt1, _material, 0);
+        }
+        else if(_downSampleMode == DownSampleMode.Eighter)
+        {
+            rt1 = RenderTexture.GetTemporary(source.width / 8, source.height / 8);
+            rt2 = RenderTexture.GetTemporary(source.width / 8, source.height / 8);
+            Graphics.Blit(source, rt1, _material, 0);
+
         }
         else
         {
